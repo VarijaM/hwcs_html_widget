@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Variables: Store & Change A Value</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#f7fbff;--card:#ffffff;--accent:#2b8cff;--muted:#58627a}
+    body{font-family:'DM Sans', sans-serif;line-height:1.4;background:var(--bg);color:#102027;margin:0;padding:24px}
+    .wrap{max-width:820px;margin:0 auto}
+    header{display:flex;align-items:baseline;gap:12px}
+    h1{font-size:1.6rem;margin:0}
+    p.lead{color:var(--muted);margin-top:8px}
+
+    .card{background:var(--card);border-radius:12px;padding:18px;margin-top:18px;box-shadow:0 6px 18px rgba(16,32,39,0.06)}
+    .row{display:flex;gap:16px;align-items:center}
+    .big-number{font-weight:700;font-size:2.6rem;color:var(--accent);min-width:120px;text-align:center}
+    .controls{display:flex;gap:8px;flex-wrap:wrap}
+    input[type=number], input[type=text]{padding:8px;border-radius:8px;border:1px solid #d6e3ff;min-width:140px}
+    button{background:var(--accent);border:none;color:white;padding:8px 12px;border-radius:8px;cursor:pointer}
+    button.secondary{background:#e6eefc;color:#0b254a}
+
+    pre.code{background:#f3f6fb;padding:12px;border-radius:8px;overflow:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace}
+    .hint{color:var(--muted);font-size:0.95rem}
+    .challenge{background:linear-gradient(90deg,#fff,#f8fbff);padding:12px;border-radius:8px;margin-top:12px;border:1px dashed #e1eafc}
+    footer{margin-top:18px;color:var(--muted);font-size:0.9rem}
+  </style>
+</head>
+<body>
+  <div class="wrap column column-md">
+    <header>
+      <h1>Variables: A Place to Store and Change a Value</h1>
+    </header>
+    <p class="lead">Think of a variable like a labeled box that can hold a value (a number, some words, or true/false). You can look inside the box, change what's inside, or move the value to another box.</p>
+
+    <div class="card">
+      <strong>Try This Exercise:</strong>
+      <div style="display:flex;gap:16px;align-items:center;margin-top:12px;">
+        <div>
+          <div class="hint">Current value of the variable <code>score</code>:</div>
+          <div class="big-number" id="scoreDisplay">0</div>
+        </div>
+        <div style="flex:1">
+          <div class="controls">
+            <input id="setInput" type="number" value="0" aria-label="value to set" />
+            <button id="setBtn" class="button-semantic button-primary">Set score</button>
+            <button id="addBtn" class="button-semantic button-primary">Add 1</button>
+            <button id="resetBtn" class="button-semantic button-secondary">Reset</button>
+          </div>
+          <div style="margin-top:10px" class="hint">You can change the number and press <strong>Set score</strong> or press <strong>Add 1</strong> to increase it.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px">
+        <div class="hint">This is what the JavaScript code looks like when we use a variable:</div>
+        <pre class="code" id="codeBlock">let score = 0;
+        score = 5; // changed to 5
+        score = score + 1; // add 1
+        </pre>
+      </div>
+
+      <div class="challenge">
+        <strong>Mini challenge:</strong> Set the score to 10, then press <em>Add 1</em> three times. What is the final number? Try writing it down and then check the box.
+      </div>
+    </div>
+
+    <div class="card">
+      <strong>Short explanation</strong>
+      <p class="hint">- <code>let score = 0;</code> makes the variable called <code>score</code> and puts the number 0 inside it.
+      <br>- To change it, we assign a new value: <code>score = 5;</code>
+      <br>- To increase it by one we do: <code>score = score + 1;</code> (this reads: put the old score plus one back into score).</p>
+      <p class="hint">Variables give programs memory so they can remember things while running.</p>
+    </div>
+
+    <footer>
+      <div>Open this file in a web browser to interact with the example. File: <code>src/html/variables-widget.html</code></div>
+    </footer>
+  </div>
+
+  <script>
+    // Interactive demo script — simple and clear for learners
+    (function(){
+      // the variable we're demonstrating
+      let score = 0;
+
+      const scoreDisplay = document.getElementById('scoreDisplay');
+      const setInput = document.getElementById('setInput');
+      const setBtn = document.getElementById('setBtn');
+      const addBtn = document.getElementById('addBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const codeBlock = document.getElementById('codeBlock');
+
+      function render(){
+        scoreDisplay.textContent = String(score);
+        // update the code text to show how the variable changes
+        codeBlock.textContent = `let score = ${score};\n// You can change score like this:\nscore = ${score};\n// Add one:\nscore = ${score} + 1;`;
+      }
+
+      setBtn.addEventListener('click', function(){
+        // parse the number from input, if not a number, keep old value
+        const v = Number(setInput.value);
+        if (!Number.isNaN(v)) {
+          score = v;
+        }
+        render();
+      });
+
+      addBtn.addEventListener('click', function(){
+        score = score + 1; // increases by one
+        render();
+      });
+
+      resetBtn.addEventListener('click', function(){
+        score = 0;
+        setInput.value = '0';
+        render();
+      });
+
+      // initial render
+      render();
+    })();
+  </script>
+</body>
+</html>
